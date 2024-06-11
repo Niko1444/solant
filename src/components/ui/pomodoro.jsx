@@ -12,7 +12,6 @@ export default function Pomodoro() {
 	const [consumedSecond, setConsumedSecond] = useState(0)
 	const [ticking, setTicking] = useState(false)
 	const [isTimeUp, setIsTimeUp] = useState(false)
-	const [openSetting, setOpenSetting] = useState(false)
 
 	const pomodoroRef = useRef()
 	const shortBreakRef = useRef()
