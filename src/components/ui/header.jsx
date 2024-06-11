@@ -8,7 +8,7 @@ export default function Header() {
 			<Image src="/assets/svgs/logo.svg" alt="Logo" width={203} height={69} />
 
 			{/* A welcome text */}
-			<h1 className="font-primary text-2xl">
+			<h1 className="font-primary text-[1.25rem]">
 				Greetings Nikola <br />
 				Have a productive day!
 			</h1>

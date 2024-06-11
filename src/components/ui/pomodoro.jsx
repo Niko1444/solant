@@ -1,8 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
-import ModalSetting from '../pomodoro/ModalSetting'
-import Timer from '../pomodoro/Timer'
+import Timer from '../pomodoro/timer'
 
 export default function Pomodoro() {
 	const [pomodoro, setPomodoro] = useState(25)
@@ -117,7 +116,8 @@ export default function Pomodoro() {
 
 	return (
 		<div className="font-primary">
-			<div className="mx-auto max-w-2xl">
+			<div className="mx-auto flex max-w-2xl flex-col">
+				{/* Timer */}
 				<Timer
 					stage={stage}
 					switchStage={switchStage}
@@ -127,14 +127,6 @@ export default function Pomodoro() {
 					startTimer={startTimer}
 					isTimeUp={isTimeUp}
 					reset={reset}
-				/>
-				<ModalSetting
-					openSetting={openSetting}
-					setOpenSetting={setOpenSetting}
-					pomodoroRef={pomodoroRef}
-					shortBreakRef={shortBreakRef}
-					longBreakRef={longBreakRef}
-					updateTimeDefaultValue={updateTimeDefaultValue}
 				/>
 			</div>
 		</div>
