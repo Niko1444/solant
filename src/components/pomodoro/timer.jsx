@@ -1,133 +1,115 @@
 'use client'
 
-import React, { useEffect, useRef, useState, useCallback } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import Image from 'next/image'
-import ModalSetting from '../pomodoro/modal-setting'
 import { FiBellOff } from 'react-icons/fi'
 import { motion, AnimatePresence } from 'framer-motion'
 import Indicator from './indicator'
+import ModalSetting from '../pomodoro/modal-setting'
 
-export default function Timer() {
-	const [pomodoro, setPomodoro] = useState(25)
-	const [shortBreak, setShortBreak] = useState(5)
-	const [longBreak, setLongBreak] = useState(10)
-	const [seconds, setSecond] = useState(0)
-	const [stage, setStage] = useState(0)
-	const [consumedSecond, setConsumedSecond] = useState(0)
-	const [ticking, setTicking] = useState(false)
-	const [isTimeUp, setIsTimeUp] = useState(false)
-	const [completedPomodoros, setCompletedPomodoros] = useState(0)
-	const [openSetting, setOpenSetting] = useState(false)
+export default function Timer({
+	stage,
+	switchStage,
+	getTickingTime,
+	seconds,
+	ticking,
+	startTimer,
+	isTimeUp,
+	reset,
+	setOpenSetting,
+	openSetting,
+	pomodoroRef,
+	shortBreakRef,
+	longBreakRef,
+	updateTimeDefaultValue,
+	completedPomodoros,
+}) {
+	const playerContainerRef = useRef(null)
+	const hiddenPlayerContainerRef = useRef(null)
+	const [pipWindow, setPipWindow] = useState(null)
 
-	const pomodoroRef = useRef()
-	const shortBreakRef = useRef()
-	const longBreakRef = useRef()
-
-	const updateTimeDefaultValue = () => {
-		setPomodoro(pomodoroRef.current.value)
-		setShortBreak(shortBreakRef.current.value)
-		setLongBreak(longBreakRef.current.value)
-		setOpenSetting(false)
-		setSecond(0)
-		setConsumedSecond(0)
-	}
-
-	const switchStage = useCallback(
-		(index) => {
-			const isYes =
-				consumedSecond && stage !== index
-					? confirm('Are you sure you want to switch?')
-					: false
-			if (isYes) {
-				reset()
-				setStage(index)
-			} else if (!consumedSecond) {
-				setStage(index)
+	const copyStyles = (sourceDoc, targetDoc) => {
+		Array.from(sourceDoc.styleSheets).forEach((styleSheet) => {
+			if (styleSheet.href) {
+				const link = document.createElement('link')
+				link.rel = 'stylesheet'
+				link.href = styleSheet.href
+				targetDoc.head.appendChild(link)
+			} else if (styleSheet.cssRules) {
+				const style = document.createElement('style')
+				Array.from(styleSheet.cssRules).forEach((rule) => {
+					style.appendChild(document.createTextNode(rule.cssText))
+				})
+				targetDoc.head.appendChild(style)
 			}
-		},
-		[consumedSecond, stage],
-	)
-
-	const getTickingTime = () => {
-		const timeStage = {
-			0: pomodoro,
-			1: shortBreak,
-			2: longBreak,
-		}
-		return timeStage[stage]
+		})
 	}
 
-	const updateMinute = () => {
-		const updateStage = {
-			0: setPomodoro,
-			1: setShortBreak,
-			2: setLongBreak,
-		}
-		return updateStage[stage]
-	}
+	const openPiP = async () => {
+		const hiddenPlayerContainer = hiddenPlayerContainerRef.current
 
-	const reset = () => {
-		setConsumedSecond(0)
-		setTicking(false)
-		setSecond(0)
-		updateTimeDefaultValue()
-	}
+		if (hiddenPlayerContainer) {
+			const newPipWindow = await documentPictureInPicture.requestWindow({
+				width: 400,
+				height: 225,
+			})
 
-	const timeUp = () => {
-		reset()
-		setIsTimeUp(true)
-	}
+			copyStyles(document, newPipWindow.document)
 
-	const clockTicking = useCallback(() => {
-		const minutes = getTickingTime()
-		const setMinutes = updateMinute()
+			// Move the hidden player to the Picture-in-Picture window.
+			newPipWindow.document.body.appendChild(hiddenPlayerContainer)
 
-		if (minutes === 0 && seconds === 0) {
-			timeUp()
-		} else if (seconds === 0) {
-			setMinutes((minute) => minute - 1)
-			setSecond(59)
-		} else {
-			setSecond((second) => second - 1)
-		}
-	}, [getTickingTime, updateMinute, seconds])
+			// Add an exit button to the PiP window
+			const exitButton = document.createElement('button')
+			exitButton.textContent = 'X'
+			exitButton.style.borderRadius = '7px'
+			exitButton.style.position = 'absolute'
+			exitButton.style.top = '10px'
+			exitButton.style.right = '10px'
+			exitButton.style.zIndex = '1000'
+			exitButton.style.padding = '5px 10px'
+			exitButton.style.backgroundColor = '#E4EC9C'
+			exitButton.style.color = '#000000'
+			exitButton.style.border = 'none'
+			exitButton.style.cursor = 'pointer'
+			newPipWindow.document.body.appendChild(exitButton)
 
-	const startTimer = () => {
-		setIsTimeUp(false)
-		setTicking((ticking) => !ticking)
-	}
-
-	useEffect(() => {
-		window.onbeforeunload = () => {
-			return consumedSecond ? 'Show warning' : null
-		}
-
-		const timer = setInterval(() => {
-			if (ticking) {
-				setConsumedSecond((value) => value + 1)
-				clockTicking()
-			}
-		}, 1000)
-
-		return () => {
-			clearInterval(timer)
-		}
-	}, [seconds, pomodoro, shortBreak, longBreak, ticking, clockTicking])
-
-	useEffect(() => {
-		if (isTimeUp) {
-			if (stage === 0) {
-				setCompletedPomodoros((prev) => prev + 1)
-				if ((completedPomodoros + 1) % 4 === 0) {
-					setStage(2) // Move to Long Break after 4 Pomodoro sessions
-				} else {
-					setStage(1) // Move to Short Break
+			const movePlayerBack = () => {
+				const mainDocumentHiddenPlayerContainer = document.getElementById(
+					'hiddenPlayerContainerWrapper',
+				)
+				const pipHiddenPlayer = newPipWindow.document.body.querySelector(
+					'#hiddenPlayerContainer',
+				)
+				if (mainDocumentHiddenPlayerContainer && pipHiddenPlayer) {
+					mainDocumentHiddenPlayerContainer.appendChild(pipHiddenPlayer)
+					newPipWindow.close()
 				}
-			} else {
-				setStage(0) // Move to Pomodoro
+			}
+
+			exitButton.addEventListener('click', movePlayerBack)
+			newPipWindow.addEventListener('pagehide', movePlayerBack)
+
+			setPipWindow(newPipWindow)
+		}
+	}
+
+	useEffect(() => {
+		return () => {
+			if (pipWindow) {
+				const hiddenPlayerContainer = pipWindow.document.body.querySelector(
+					'#hiddenPlayerContainer',
+				)
+				if (hiddenPlayerContainer) {
+					const mainDocumentHiddenPlayerContainer = document.getElementById(
+						'hiddenPlayerContainerWrapper',
+					)
+					mainDocumentHiddenPlayerContainer.appendChild(hiddenPlayerContainer)
+				}
+				pipWindow.close()
 			}
 		}
-	}, [isTimeUp, stage, completedPomodoros, switchStage])
+	}, [pipWindow])
 
 	return (
 		<div className="mx-auto mt-10 flex w-10/12 flex-col items-center justify-center pt-5">
@@ -152,15 +134,34 @@ export default function Timer() {
 				<Indicator stage={completedPomodoros % 4} />
 			</div>
 
-			{/* Timer */}
-			<motion.h1
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
-				exit={{ opacity: 0 }}
-				className="m-0 select-none font-secondary text-8xl text-[200px] font-bold text-white"
-			>
-				{getTickingTime()}:{seconds.toString().padStart(2, '0')}
-			</motion.h1>
+			{/* Visible Timer */}
+			<div id="playerContainerWrapper">
+				<motion.h1
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					id="playerContainer"
+					ref={playerContainerRef}
+					className="m-0 select-none font-secondary text-8xl text-[200px] font-bold text-white"
+				>
+					{getTickingTime()}:{seconds.toString().padStart(2, '0')}
+				</motion.h1>
+			</div>
+
+			{/* Hidden Timer for PiP */}
+			<div id="hiddenPlayerContainerWrapper" className="hidden">
+				<motion.h1
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					id="hiddenPlayerContainer"
+					ref={hiddenPlayerContainerRef}
+					className="m-0 select-none font-secondary text-8xl text-[100px] font-bold text-white"
+				>
+					{getTickingTime()}:{seconds.toString().padStart(2, '0')}
+				</motion.h1>
+			</div>
+
 			<div className="flex items-center gap-2">
 				<motion.button
 					initial={{ opacity: 0 }}
@@ -172,14 +173,12 @@ export default function Timer() {
 					{ticking ? 'Stop' : 'Start'}
 				</motion.button>
 				{isTimeUp && (
-					<FiBellOff
-						className="cursor-pointer text-3xl text-white"
-						onClick={muteAlarm}
-					/>
+					<FiBellOff className="cursor-pointer text-3xl text-white" />
 				)}
 			</div>
 
 			{/* Reset & PiP button */}
+			{/* Reset */}
 			<div className="flex flex-row justify-center gap-3 align-middle">
 				<motion.div
 					initial={{ opacity: 0 }}
@@ -195,6 +194,8 @@ export default function Timer() {
 						className="cursor-pointer"
 					/>
 				</motion.div>
+
+				{/* PiP */}
 				<motion.div
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
@@ -205,6 +206,7 @@ export default function Timer() {
 						alt="Enter PiP Button"
 						width={50}
 						height={50}
+						onClick={openPiP}
 						className="cursor-pointer"
 					/>
 				</motion.div>

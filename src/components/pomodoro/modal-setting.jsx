@@ -32,14 +32,6 @@ function ModalSetting({
 		<AnimatePresence>
 			{openSetting && (
 				<>
-					{/* Dim is disabled */}
-					{/* <motion.div
-						className="absolute left-0 top-0 h-full w-full bg-black bg-opacity-30"
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						onClick={() => setOpenSetting(false)}
-					/> */}
 					<motion.div
 						className="absolute w-96 rounded-[2rem] bg-green-darkest p-5 opacity-[0.98]"
 						initial={{ opacity: 0, scale: 0.9 }}
