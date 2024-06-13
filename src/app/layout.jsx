@@ -6,15 +6,13 @@ export const metadata = {
 	title: 'Solant',
 	description: 'The productive app for studying and working',
 }
-
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
-			<body>
-				<div className="background-div absolute inset-0 bg-cover bg-center">
-					{children}
-				</div>
-			</body>
+			<head>
+				<link rel="icon" href="/favicon/favicon.ico" sizes="any" />
+			</head>
+			<body>{children}</body>
 		</html>
 	)
 }
