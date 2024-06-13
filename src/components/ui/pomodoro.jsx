@@ -20,12 +20,14 @@ export default function Pomodoro() {
 	const longBreakRef = useRef()
 
 	const updateTimeDefaultValue = () => {
-		setPomodoro(pomodoroRef.current.value)
-		setShortBreak(shortBreakRef.current.value)
-		setLongBreak(longBreakRef.current.value)
-		setOpenSetting(false)
-		setSecond(0)
-		setConsumedSecond(0)
+		if (pomodoroRef.current && shortBreakRef.current && longBreakRef.current) {
+			setPomodoro(parseInt(pomodoroRef.current.value))
+			setShortBreak(parseInt(shortBreakRef.current.value))
+			setLongBreak(parseInt(longBreakRef.current.value))
+			setOpenSetting(false)
+			setSecond(0)
+			setConsumedSecond(0)
+		}
 	}
 
 	const switchStage = useCallback(
@@ -44,35 +46,38 @@ export default function Pomodoro() {
 		[consumedSecond, stage],
 	)
 
-	const getTickingTime = () => {
+	const getTickingTime = useCallback(() => {
 		const timeStage = {
 			0: pomodoro,
 			1: shortBreak,
 			2: longBreak,
 		}
 		return timeStage[stage]
-	}
+	}, [pomodoro, shortBreak, longBreak, stage])
 
-	const updateMinute = () => {
+	const updateMinute = useCallback(() => {
 		const updateStage = {
 			0: setPomodoro,
 			1: setShortBreak,
 			2: setLongBreak,
 		}
 		return updateStage[stage]
-	}
+	}, [stage])
 
-	const reset = () => {
+	const reset = useCallback(() => {
 		setConsumedSecond(0)
 		setTicking(false)
 		setSecond(0)
 		updateTimeDefaultValue()
-	}
+	}, [])
 
-	const timeUp = () => {
-		reset()
+	const timeUp = useCallback(() => {
 		setIsTimeUp(true)
-	}
+		setTicking(false)
+		if (stage === 0) {
+			setCompletedPomodoros((prev) => (prev + 1) % 4)
+		}
+	}, [stage])
 
 	const clockTicking = useCallback(() => {
 		const minutes = getTickingTime()
@@ -86,7 +91,7 @@ export default function Pomodoro() {
 		} else {
 			setSecond((second) => second - 1)
 		}
-	}, [getTickingTime, updateMinute, seconds])
+	}, [getTickingTime, updateMinute, seconds, timeUp])
 
 	const startTimer = () => {
 		setIsTimeUp(false)
@@ -108,22 +113,14 @@ export default function Pomodoro() {
 		return () => {
 			clearInterval(timer)
 		}
-	}, [seconds, pomodoro, shortBreak, longBreak, ticking, clockTicking])
+	}, [ticking, clockTicking])
 
 	useEffect(() => {
 		if (isTimeUp) {
-			if (stage === 0) {
-				setCompletedPomodoros((prev) => prev + 1)
-				if ((completedPomodoros + 1) % 4 === 0) {
-					setStage(2)
-				} else {
-					setStage(1)
-				}
-			} else {
-				setStage(0)
-			}
+			console.log('Time is up, ringing the bell!')
+			// You can add additional logic for ringing the bell here
 		}
-	}, [isTimeUp, stage, completedPomodoros, switchStage])
+	}, [isTimeUp])
 
 	return (
 		<div className="font-primary">

@@ -2,7 +2,6 @@
 
 import React, { useRef, useState, useEffect } from 'react'
 import Image from 'next/image'
-import { FiBellOff } from 'react-icons/fi'
 import { motion, AnimatePresence } from 'framer-motion'
 import Indicator from './indicator'
 import ModalSetting from '../pomodoro/modal-setting'
@@ -131,7 +130,7 @@ export default function Timer({
 						{option}
 					</motion.h1>
 				))}
-				<Indicator stage={completedPomodoros % 4} />
+				<Indicator stage={completedPomodoros} />
 			</div>
 
 			{/* Visible Timer */}
@@ -172,9 +171,7 @@ export default function Timer({
 				>
 					{ticking ? 'Stop' : 'Start'}
 				</motion.button>
-				{isTimeUp && (
-					<FiBellOff className="cursor-pointer text-3xl text-white" />
-				)}
+				{isTimeUp && console.log('Time is up, ringing the bell!')}
 			</div>
 
 			{/* Reset & PiP button */}
