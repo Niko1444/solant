@@ -111,9 +111,9 @@ export default function Timer({
 	}, [pipWindow])
 
 	return (
-		<div className="mx-auto mt-10 flex w-10/12 flex-col items-center justify-center pt-5">
+		<div className="mx-auto flex w-10/12 flex-col items-center justify-center pt-5">
 			{/* Pomodoro, Short Break, Long Break, and Indicator */}
-			<div className="relative flex items-center gap-5">
+			<div className="relative flex items-center gap-2 sm:gap-5">
 				{['Pomodoro', 'Short Break', 'Long Break'].map((option, index) => (
 					<motion.h1
 						key={index}
@@ -122,8 +122,8 @@ export default function Timer({
 						exit={{ opacity: 0 }}
 						className={` ${
 							index === stage
-								? 'flex h-[2.375rem] w-[9.375rem] cursor-pointer items-center justify-center rounded-2xl bg-green-dark text-[1.23725rem] text-white transition ease-in-out hover:bg-green-dark'
-								: 'flex h-[2.375rem] w-[9.375rem] cursor-pointer items-center justify-center rounded-2xl bg-green-lightest text-[1.23725rem] transition ease-in-out hover:bg-green-dark hover:text-white'
+								? 'flex h-[2rem] w-[7rem] cursor-pointer items-center justify-center rounded-2xl bg-green-dark text-[1rem] text-white transition ease-in-out hover:bg-green-dark sm:h-[2.375rem] sm:w-[9.375rem] sm:text-[1.23725rem]'
+								: 'flex h-[2rem] w-[7rem] cursor-pointer items-center justify-center rounded-2xl bg-green-lightest text-[1rem] transition ease-in-out hover:bg-green-dark hover:text-white sm:h-[2.375rem] sm:w-[9.375rem] sm:text-[1.23725rem]'
 						} cursor-pointer rounded p-1 transition-all`}
 						onClick={() => switchStage(index)}
 					>
@@ -141,7 +141,10 @@ export default function Timer({
 					exit={{ opacity: 0 }}
 					id="playerContainer"
 					ref={playerContainerRef}
-					className="m-0 select-none font-secondary text-8xl text-[200px] font-bold text-white"
+					className="m-0 select-none font-secondary text-[150px] font-bold text-white sm:text-[200px]"
+					style={{
+						lineHeight: '1',
+					}}
 				>
 					{getTickingTime()}:{seconds.toString().padStart(2, '0')}
 				</motion.h1>
@@ -155,18 +158,18 @@ export default function Timer({
 					exit={{ opacity: 0 }}
 					id="hiddenPlayerContainer"
 					ref={hiddenPlayerContainerRef}
-					className="m-0 select-none font-secondary text-8xl text-[100px] font-bold text-white"
+					className="m-0 select-none font-secondary text-[50px] font-bold text-white sm:text-[100px]"
 				>
 					{getTickingTime()}:{seconds.toString().padStart(2, '0')}
 				</motion.h1>
 			</div>
 
-			<div className="flex items-center gap-2">
+			<div className="flex items-center gap-2 sm:gap-4">
 				<motion.button
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
-					className="mb-4 h-[3.5625rem] w-[14.0625rem] rounded-3xl bg-green-lightest px-16 py-2 text-2xl font-bold uppercase text-black transition ease-in-out hover:bg-green-dark hover:text-white"
+					className="mb-4 h-[2.5rem] w-[10rem] rounded-3xl bg-green-lightest px-10 py-2 text-xl font-bold uppercase text-black transition ease-in-out hover:bg-green-dark hover:text-white sm:h-[3.5625rem] sm:w-[14.0625rem] sm:px-16 sm:text-2xl"
 					onClick={startTimer}
 				>
 					{ticking ? 'Stop' : 'Start'}
@@ -185,10 +188,10 @@ export default function Timer({
 					<Image
 						src="/assets/svgs/restart-button.svg"
 						alt="Restart Button"
-						width={50}
-						height={50}
+						width={40}
+						height={40}
 						onClick={reset}
-						className="cursor-pointer"
+						className="cursor-pointer sm:h-[50px] sm:w-[50px]"
 					/>
 				</motion.div>
 
@@ -201,10 +204,10 @@ export default function Timer({
 					<Image
 						src="/assets/svgs/minimize-button.svg"
 						alt="Enter PiP Button"
-						width={50}
-						height={50}
+						width={40}
+						height={40}
 						onClick={openPiP}
-						className="cursor-pointer"
+						className="cursor-pointer sm:h-[50px] sm:w-[50px]"
 					/>
 				</motion.div>
 				<motion.div
@@ -215,10 +218,10 @@ export default function Timer({
 					<Image
 						src="/assets/svgs/setting-button.svg"
 						alt="Pomodoro Setting Button"
-						width={50}
-						height={50}
+						width={40}
+						height={40}
 						onClick={() => setOpenSetting(true)}
-						className="cursor-pointer"
+						className="cursor-pointer sm:h-[50px] sm:w-[50px]"
 					/>
 				</motion.div>
 			</div>
