@@ -76,7 +76,7 @@ function ModalSetting({
 						</div>
 						<div className="flex-grow">
 							{/* Huddle */}
-							<div className="flex items-center justify-between pt-10 text-green-lightest">
+							<div className="flex items-center justify-between pt-8 text-green-lightest">
 								<h1 className="font-bold uppercase tracking-wider">
 									Pomodoro Huddle
 								</h1>
@@ -97,6 +97,34 @@ function ModalSetting({
 									</button>
 								</div>
 							</div>
+						</div>
+						{/* An svg and encourage text */}
+						<div className="flex-grow">
+							{/* Placeholder for the svg */}
+							{/* Encourage text */}
+							{!isMobile && (
+								<div className="flex h-24 w-full items-center justify-center rounded bg-green-lightest bg-opacity-30">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="48"
+										height="48"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										strokeWidth="2"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										className="text-green-lightest"
+									>
+										<circle cx="12" cy="12" r="10"></circle>
+										<line x1="12" y1="16" x2="12" y2="12"></line>
+										<line x1="12" y1="8" x2="12" y2="8"></line>
+									</svg>
+								</div>
+							)}
+							<p className="mt-5 text-center text-green-lightest">
+								Huddle up with friends for fun, focus, and exclusive solantrees!
+							</p>
 						</div>
 						{/* Save button */}
 						<div>
