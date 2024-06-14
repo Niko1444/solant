@@ -1,7 +1,7 @@
 {
   "program": {
     "candyMachine": "CU4A14G8wVGiT6czXmVNAQsieRBcXTWbHFC2MFpUUqxp",
-    "candyGuard": "7WZm6LqJW7BEcw6XgkrjVf5wEwyUVKuQguBsdo67X4MB",
+    "candyGuard": "FdgupPsHVwZojN7rscpQTBncUmBtmuHzySURna7FHfHo",
     "candyMachineCreator": "3qfd3N8Y8Nn1btvenHoATunqhhZBWLfzdLTHPyYR2tqF",
     "collectionMint": "3KsC4LMFwKrPsF8K8fC1U7wRwNoK5aJ3Wr8vKexVZaxw"
   },
@@ -12,7 +12,7 @@
       "image_link": "https://arweave.net/yqTKFzFEy8B4iGX5HARSLk00XegEHSc-KaLK0WR_2LE?ext=png",
       "metadata_hash": "1ef730cedd6563b435bdbbc742b42f6ba41d5986925fbf7e1038876b224aa182",
       "metadata_link": "https://arweave.net/3cXKfm0baOtfQJfAGTdOb_-6zwA9Gz-O3lHghHtRerQ",
-      "onChain": true
+      "onChain": false
     },
     "0": {
       "name": "Estrella",

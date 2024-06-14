@@ -8,7 +8,10 @@ import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
 
 import { mint } from '@/app/(main)/page';
 
-export default function Footer({ candyState, metaplex }) {
+import CandyMint from '@/components/ui/candyMint';
+
+
+export default function Footer() {
 
     const [showWallet, setShowWallet] = useState(false);
 
@@ -27,8 +30,10 @@ export default function Footer({ candyState, metaplex }) {
 	return (
 		<>
 			{/* The footer will have 2 buttons (left & right), one for open the garden overlay, one for the wallet connecting */}
+			{showWallet && <WalletMultiButton />}
 			<footer className="flex items-center justify-between text-white">
 				{/* The left button */}
+				
 				<Image
 					src="/assets/svgs/plant-button.svg"
 					alt="A button has a wallet image inside"
@@ -37,10 +42,6 @@ export default function Footer({ candyState, metaplex }) {
 					className="cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110"
 					onClick={handleMint}
 				/>
-				
-
-
-                {showWallet && <WalletMultiButton />}
 
 				{/* The right button */}
                 <Image
@@ -52,6 +53,7 @@ export default function Footer({ candyState, metaplex }) {
                     onClick={handleClick}
                 />
 			</footer>
+			
 		</>
 	)
 }
