@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 export default function Indicator({ stage }) {
 	return (
 		<>
-			<div className="absolute left-[2.7rem] top-12 flex h-2.5 w-[55px] items-start gap-[5px]">
+			<div className="absolute left-[1.8rem] top-10 flex h-2.5 w-[55px] items-start gap-[5px] sm:left-[2.7rem] sm:top-12">
 				{stage === 0 && (
 					<>
 						{[...Array(4)].map((_, index) => (
