@@ -4,12 +4,6 @@ import './globals.css'
 import '@fontsource/inika'
 import '@fontsource-variable/yrsa'
 
-// Comment out the server-side metadata as it's temporarily disabled
-// export const metadata = {
-// 	title: 'Solant',
-// 	description: 'The productive app for studying and working',
-// }
-
 import { useEffect, useMemo, useState } from 'react'
 import {
 	ConnectionProvider,
@@ -29,21 +23,22 @@ export default function RootLayout({ children }) {
 	}, [])
 
 	return (
-		// <html lang="en">
-		// 	<head>
-		// 		<link rel="icon" href="/favicon/favicon.ico" sizes="any" />
-		// 	</head>
-		// 	<body>{children}</body>
-		// </html>
-		mounted && (
-			<ConnectionProvider
-				endpoint="https://solana-devnet.g.alchemy.com/v2/Yw6g1yw54yXlyLYD5kXbxH4-8tAxvVGY"
-				config={{ commitment: 'confirmed' }}
-			>
-				<WalletProvider wallets={wallets} autoConnect>
-					<WalletModalProvider>{children}</WalletModalProvider>
-				</WalletProvider>
-			</ConnectionProvider>
-		)
+		<html lang="en">
+			<head>
+				<link rel="icon" href="/favicon/favicon.ico" sizes="any" />
+			</head>
+			<body>
+				{mounted && (
+					<ConnectionProvider
+						endpoint="https://solana-devnet.g.alchemy.com/v2/Yw6g1yw54yXlyLYD5kXbxH4-8tAxvVGY"
+						config={{ commitment: 'confirmed' }}
+					>
+						<WalletProvider wallets={wallets} autoConnect>
+							<WalletModalProvider>{children}</WalletModalProvider>
+						</WalletProvider>
+					</ConnectionProvider>
+				)}
+			</body>
+		</html>
 	)
 }
