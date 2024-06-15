@@ -30,6 +30,7 @@ export default function Pomodoro() {
 		}
 	}
 
+	/* eslint-enable react-hooks/exhaustive-deps */
 	const switchStage = useCallback(
 		(index) => {
 			const isYes =
@@ -45,6 +46,7 @@ export default function Pomodoro() {
 		},
 		[consumedSecond, stage],
 	)
+	/* eslint-enable react-hooks/exhaustive-deps */
 
 	const getTickingTime = useCallback(() => {
 		const timeStage = {
@@ -113,7 +115,7 @@ export default function Pomodoro() {
 		return () => {
 			clearInterval(timer)
 		}
-	}, [ticking, clockTicking])
+	}, [ticking, clockTicking, consumedSecond])
 
 	useEffect(() => {
 		if (isTimeUp) {
