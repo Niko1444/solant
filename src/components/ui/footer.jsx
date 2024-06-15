@@ -1,11 +1,23 @@
+'use client'
+
+import React, { useState } from 'react'
+
 import Image from 'next/image'
 
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
+
+import CandyMint from '@/components/ui/candyMint'
+
 export default function Footer() {
+	const [showWallet, setShowWallet] = useState(false)
+
 	return (
 		<>
 			{/* The footer will have 2 buttons (left & right), one for open the garden overlay, one for the wallet connecting */}
+			{showWallet && <WalletMultiButton />}
 			<footer className="flex items-center justify-between text-white">
 				{/* The left button */}
+
 				<Image
 					src="/assets/svgs/plant-button.svg"
 					alt="A button has a plant image inside"

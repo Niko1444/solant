@@ -1,0 +1,23 @@
+{
+    "name" : "Olympus", 
+    "symbol" : "Tree",
+    "description" : "Born from stardust and ancient cliffside minerals, the Estrella Tree stands as a celestial sentinel. Shimmering leaves capture starlight, pulsating with cosmic energy.",
+    "image" : "olympus.png",
+    "properties" : {
+        "files" : [{
+            "uri" : "olympus.png",
+            "type" : "image/png"
+        }],
+        "creators" : [{"address" : "H6oEWNDbXCCXXwjZG4XViVTdctoXubnGa1LDQ76vWNk5", "share" : 100}]
+    },
+    "attributes": [
+        {
+            "trait_type": "type",
+            "value": "Mithical"
+        },
+        {
+            "trait_type": "origin",
+            "value": "Cliff"
+        }
+    ]
+}
