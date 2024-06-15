@@ -9,7 +9,7 @@ export default function Home() {
 	return (
 		<>
 			{/* The site will be in a full width and height layout, with fixed Header and Footer */}
-			<div className="relative flex h-full w-full flex-col justify-between">
+			<div className="background-div absolute inset-0 flex h-full w-full flex-col justify-between bg-cover bg-center">
 				<Header />
 				<Pomodoro />
 				<CandyMint />

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useCallback } from 'react'
 import Timer from '../pomodoro/timer'
 
 export default function Pomodoro() {
@@ -12,64 +12,74 @@ export default function Pomodoro() {
 	const [consumedSecond, setConsumedSecond] = useState(0)
 	const [ticking, setTicking] = useState(false)
 	const [isTimeUp, setIsTimeUp] = useState(false)
+	const [completedPomodoros, setCompletedPomodoros] = useState(0)
+	const [openSetting, setOpenSetting] = useState(false)
 
 	const pomodoroRef = useRef()
 	const shortBreakRef = useRef()
 	const longBreakRef = useRef()
 
 	const updateTimeDefaultValue = () => {
-		setPomodoro(pomodoroRef.current.value)
-		setShortBreak(shortBreakRef.current.value)
-		setLongBreak(longBreakRef.current.value)
-		setOpenSetting(false)
-		setSecond(0)
-		setConsumedSecond(0)
-	}
-
-	const switchStage = (index) => {
-		const isYes =
-			consumedSecond && stage !== index
-				? confirm('Are you sure you want to switch?')
-				: false
-		if (isYes) {
-			reset()
-			setStage(index)
-		} else if (!consumedSecond) {
-			setStage(index)
+		if (pomodoroRef.current && shortBreakRef.current && longBreakRef.current) {
+			setPomodoro(parseInt(pomodoroRef.current.value))
+			setShortBreak(parseInt(shortBreakRef.current.value))
+			setLongBreak(parseInt(longBreakRef.current.value))
+			setOpenSetting(false)
+			setSecond(0)
+			setConsumedSecond(0)
 		}
 	}
 
-	const getTickingTime = () => {
+	const switchStage = useCallback(
+		(index) => {
+			const isYes =
+				consumedSecond && stage !== index
+					? confirm('Are you sure you want to switch?')
+					: false
+			if (isYes) {
+				reset()
+				setStage(index)
+			} else if (!consumedSecond) {
+				setStage(index)
+			}
+		},
+		[consumedSecond, stage],
+	)
+
+	const getTickingTime = useCallback(() => {
 		const timeStage = {
 			0: pomodoro,
 			1: shortBreak,
 			2: longBreak,
 		}
 		return timeStage[stage]
-	}
+	}, [pomodoro, shortBreak, longBreak, stage])
 
-	const updateMinute = () => {
+	const updateMinute = useCallback(() => {
 		const updateStage = {
 			0: setPomodoro,
 			1: setShortBreak,
 			2: setLongBreak,
 		}
 		return updateStage[stage]
-	}
+	}, [stage])
 
-	const reset = () => {
+	const reset = useCallback(() => {
 		setConsumedSecond(0)
 		setTicking(false)
 		setSecond(0)
 		updateTimeDefaultValue()
-	}
+	}, [])
 
-	const timeUp = () => {
-		reset()
+	const timeUp = useCallback(() => {
 		setIsTimeUp(true)
-	}
+		setTicking(false)
+		if (stage === 0) {
+			setCompletedPomodoros((prev) => (prev + 1) % 4)
+		}
+	}, [stage])
 
-	const clockTicking = () => {
+	const clockTicking = useCallback(() => {
 		const minutes = getTickingTime()
 		const setMinutes = updateMinute()
 
@@ -81,7 +91,7 @@ export default function Pomodoro() {
 		} else {
 			setSecond((second) => second - 1)
 		}
-	}
+	}, [getTickingTime, updateMinute, seconds, timeUp])
 
 	const startTimer = () => {
 		setIsTimeUp(false)
@@ -103,15 +113,14 @@ export default function Pomodoro() {
 		return () => {
 			clearInterval(timer)
 		}
-	}, [
-		seconds,
-		pomodoro,
-		shortBreak,
-		longBreak,
-		ticking,
-		clockTicking,
-		consumedSecond,
-	])
+	}, [ticking, clockTicking])
+
+	useEffect(() => {
+		if (isTimeUp) {
+			console.log('Time is up, ringing the bell!')
+			// You can add additional logic for ringing the bell here
+		}
+	}, [isTimeUp])
 
 	return (
 		<div className="font-primary">
@@ -126,6 +135,13 @@ export default function Pomodoro() {
 					startTimer={startTimer}
 					isTimeUp={isTimeUp}
 					reset={reset}
+					setOpenSetting={setOpenSetting}
+					openSetting={openSetting}
+					pomodoroRef={pomodoroRef}
+					shortBreakRef={shortBreakRef}
+					longBreakRef={longBreakRef}
+					updateTimeDefaultValue={updateTimeDefaultValue}
+					completedPomodoros={completedPomodoros}
 				/>
 			</div>
 		</div>
