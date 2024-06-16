@@ -83,16 +83,11 @@ export default function CandyMint() {
 	}, [wallet, umi])
 
 	return (
-		<div className="flex flex-row justify-center">
-			<div className="group relative items-center">
-				<div className="animate-tilt absolute -inset-0.5 m-1 rounded-lg bg-gradient-to-r from-indigo-500 to-fuchsia-500 opacity-20 blur transition duration-1000 group-hover:opacity-100 group-hover:duration-200"></div>
-				<button
-					className="btn m-2 animate-pulse bg-gradient-to-br from-indigo-500 to-fuchsia-500 px-8 text-black hover:from-white hover:to-purple-300"
-					onClick={onClick}
-				>
-					<span>Mint NFT </span>
-				</button>
-			</div>
-		</div>
+		<button
+			className="mb-6 mt-5 h-11 w-[78%] rounded bg-green-lightest font-primary font-bold uppercase text-black transition ease-in-out hover:bg-green-dark hover:text-white"
+			onClick={onClick}
+		>
+			<span>Mint NFT </span>
+		</button>
 	)
 }
