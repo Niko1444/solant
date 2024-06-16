@@ -39,9 +39,9 @@ function ModalSetting({
 						className={`absolute flex flex-col rounded-[2rem] bg-green-darkest p-5 opacity-[0.98] ${
 							isMobile ? 'h-[30rem] w-[20rem]' : 'h-[40rem] w-[34rem]'
 						}`}
-						initial={{ opacity: 0, scale: 0.9 }}
-						animate={{ opacity: 1, scale: 1 }}
-						exit={{ opacity: 0, scale: 0.9 }}
+						initial={{ scale: 0.8 }}
+						animate={{ scale: 1 }}
+						exit={{ scale: 0.8 }}
 						style={{
 							transform: 'translate(-50%,-50%)',
 						}}
