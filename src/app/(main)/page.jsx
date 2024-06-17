@@ -18,7 +18,6 @@ export default function Home() {
 			<div className="background-div absolute inset-0 flex h-full w-full flex-col justify-between overflow-clip bg-cover bg-center">
 				<Header />
 				<Pomodoro />
-
 				<Footer />
 			</div>
 		</>

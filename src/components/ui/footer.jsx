@@ -3,16 +3,31 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import ModalWallet from '../wallet/modal-wallet'
+import ModalPlant from '../plant/modal-plant'
 
 export default function Footer() {
 	const [showWalletModal, setShowWalletModal] = useState(false)
+	const [showPlantModal, setShowPlantModal] = useState(false)
 
 	const toggleShowWallet = () => {
 		setShowWalletModal(!showWalletModal)
 	}
 
+	const toggleShowPlant = () => {
+		setShowPlantModal(!showPlantModal)
+	}
+
 	return (
 		<>
+			{/* Modal Plant */}
+			{showPlantModal && (
+				<div className="absolute z-[0] flex h-full w-full items-center justify-center align-middle font-primary">
+					<ModalPlant
+						openPlant={showPlantModal}
+						setOpenPlant={setShowPlantModal}
+					/>
+				</div>
+			)}
 			{/* The footer will have 2 buttons (left & right), one for open the garden overlay, one for the wallet connecting */}
 			<footer className="flex items-center justify-between text-white">
 				{/* The left button */}
@@ -23,6 +38,7 @@ export default function Footer() {
 							alt="A button has a plant image inside"
 							layout="fill"
 							objectFit="contain"
+							onClick={toggleShowPlant}
 						/>
 					</div>
 				</div>
