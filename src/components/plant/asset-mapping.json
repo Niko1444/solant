@@ -1,0 +1,18 @@
+{
+	"types": {
+		"Cosmic": "/assets/attribute/type/Cosmic.svg",
+		"Ethereal": "/assets/attribute/type/Ethereal.svg",
+		"Aberrant": "/assets/attribute/type/Aberrant.svg",
+		"Colossal": "/assets/attribute/type/Colossal.svg",
+		"Enchanted": "/assets/attribute/type/Enchanted.svg",
+		"Mithical": "/assets/attribute/type/Mithical.svg",
+		"Primal": "/assets/attribute/type/Primal.svg"
+	},
+	"origins": {
+		"Cliff": "/assets/attribute/origin/Cliff.svg",
+		"Desert": "/assets/attribute/origin/Desert.svg",
+		"Forest": "/assets/attribute/origin/Forest.svg",
+		"Glacial": "/assets/attribute/origin/Glacial.svg",
+		"Water": "/assets/attribute/origin/Water.svg"
+	}
+}
