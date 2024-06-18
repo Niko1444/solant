@@ -3,6 +3,7 @@ import React from 'react'
 import assetMapping from './asset-mapping.json'
 import PlantDescription from './plant-descriptions'
 import UserStats from './user-stats'
+import Land from './components/land'
 
 function PlantMain({ selectedPlant }) {
 	if (!selectedPlant) return null
@@ -37,14 +38,10 @@ function PlantMain({ selectedPlant }) {
 				<UserStats stats={stats} />
 			</div>
 			<div className="flex flex-1 items-center justify-center align-middle">
-				<img
-					src="/assets/svgs/land.svg"
-					alt="Your land for planting Solantrees"
-				/>
+				<Land selectedPlant={selectedPlant} />
 			</div>
 		</div>
 	)
 }
 
 export default PlantMain
-/* eslint-enable @next/next/no-img-element */
