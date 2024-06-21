@@ -13,13 +13,45 @@ import { WalletModalProvider } from '@solana/wallet-adapter-react-ui'
 import { PhantomWalletAdapter } from '@solana/wallet-adapter-phantom'
 import '@solana/wallet-adapter-react-ui/styles.css'
 
+import { socket } from '../socket'
+
 export default function RootLayout({ children }) {
 	const [mounted, setMounted] = useState(false)
+	const [isConnected, setIsConnected] = useState(false)
+	const [transport, setTransport] = useState('N/A')
 
 	const wallets = useMemo(() => [new PhantomWalletAdapter()], [])
 
 	useEffect(() => {
 		setMounted(true)
+	}, [])
+
+	useEffect(() => {
+		if (socket.connected) {
+			onConnect()
+		}
+
+		function onConnect() {
+			setIsConnected(true)
+			setTransport(socket.io.engine.transport.name)
+
+			socket.io.engine.on('upgrade', (transport) => {
+				setTransport(transport.name)
+			})
+		}
+
+		function onDisconnect() {
+			setIsConnected(false)
+			setTransport('N/A')
+		}
+
+		socket.on('connect', onConnect)
+		socket.on('disconnect', onDisconnect)
+
+		return () => {
+			socket.off('connect', onConnect)
+			socket.off('disconnect', onDisconnect)
+		}
 	}, [])
 
 	return (
