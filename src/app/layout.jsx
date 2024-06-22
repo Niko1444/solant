@@ -13,8 +13,6 @@ import { WalletModalProvider } from '@solana/wallet-adapter-react-ui'
 import { PhantomWalletAdapter } from '@solana/wallet-adapter-phantom'
 import '@solana/wallet-adapter-react-ui/styles.css'
 
-import { socket } from '../socket'
-
 export default function RootLayout({ children }) {
 	const [mounted, setMounted] = useState(false)
 	const [isConnected, setIsConnected] = useState(false)
