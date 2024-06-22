@@ -85,7 +85,7 @@ function ModalSetting({
 							<div className="flex flex-col gap-4">
 								<input
 									type="text"
-									className="flex-grow rounded bg-green-lightest bg-opacity-30 py-2 text-center text-xl text-white outline-none"
+									className="flex-grow rounded bg-green-lightest bg-opacity-30 py-2 text-center text-xl text-white outline-none placeholder:opacity-30"
 									placeholder="#HuddleID"
 								/>
 								<div className="flex gap-2">
