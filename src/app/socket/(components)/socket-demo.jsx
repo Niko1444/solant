@@ -1,8 +1,9 @@
-'use client'
-
 import React, { useState, useEffect, useRef } from 'react'
-import './style.css'
 import { io } from 'socket.io-client'
+import './style.css'
+
+// Log the environment variable to ensure it's set correctly
+console.log('Socket URL:', process.env.NEXT_PUBLIC_SOCKET_URL)
 
 const socket = io(
 	process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3000/',
@@ -11,7 +12,7 @@ const socket = io(
 const ChatApp = () => {
 	const [messages, setMessages] = useState([])
 	const [inputValue, setInputValue] = useState('')
-	const [roomValue, setRoomValue] = useState('') // New state for room input
+	const [roomValue, setRoomValue] = useState('')
 	const messagesEndRef = useRef(null)
 
 	const handleSubmit = (event) => {
@@ -25,9 +26,8 @@ const ChatApp = () => {
 	const handleRoom = (event) => {
 		event.preventDefault()
 		if (roomValue.trim()) {
-			// Use roomValue here
-			socket.emit('room', roomValue) // And here
-			setRoomValue('') // And here
+			socket.emit('room', roomValue)
+			setRoomValue('')
 		}
 	}
 
@@ -75,8 +75,8 @@ const ChatApp = () => {
 					<input
 						id="input"
 						autoComplete="off"
-						value={roomValue} // Use roomValue here
-						onChange={(e) => setRoomValue(e.target.value)} // And here
+						value={roomValue}
+						onChange={(e) => setRoomValue(e.target.value)}
 					/>
 					<button type="submit">Room</button>
 				</form>
