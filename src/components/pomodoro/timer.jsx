@@ -191,7 +191,7 @@ export default function Timer({
 						width={40}
 						height={40}
 						onClick={reset}
-						className="hover:animate-spin-once cursor-pointer sm:h-[50px] sm:w-[50px]"
+						className="cursor-pointer hover:animate-spin-once sm:h-[50px] sm:w-[50px]"
 					/>
 				</motion.div>
 
@@ -207,7 +207,7 @@ export default function Timer({
 						width={40}
 						height={40}
 						onClick={openPiP}
-						className="hover:animate-spin-once cursor-pointer sm:h-[50px] sm:w-[50px]"
+						className="cursor-pointer hover:animate-spin-once sm:h-[50px] sm:w-[50px]"
 					/>
 				</motion.div>
 				<motion.div
@@ -221,7 +221,7 @@ export default function Timer({
 						width={40}
 						height={40}
 						onClick={() => setOpenSetting(true)}
-						className="hover:animate-spin-once cursor-pointer sm:h-[50px] sm:w-[50px]"
+						className="cursor-pointer hover:animate-spin-once sm:h-[50px] sm:w-[50px]"
 					/>
 				</motion.div>
 			</div>

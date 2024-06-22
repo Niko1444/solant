@@ -15,22 +15,34 @@ export default function Pomodoro() {
 	const [completedPomodoros, setCompletedPomodoros] = useState(0)
 	const [openSetting, setOpenSetting] = useState(false)
 
+	const initialPomodoroRef = useRef(25)
+	const initialShortBreakRef = useRef(5)
+	const initialLongBreakRef = useRef(10)
+
 	const pomodoroRef = useRef()
 	const shortBreakRef = useRef()
 	const longBreakRef = useRef()
 
 	const updateTimeDefaultValue = () => {
 		if (pomodoroRef.current && shortBreakRef.current && longBreakRef.current) {
-			setPomodoro(parseInt(pomodoroRef.current.value))
-			setShortBreak(parseInt(shortBreakRef.current.value))
-			setLongBreak(parseInt(longBreakRef.current.value))
+			const newPomodoro = parseInt(pomodoroRef.current.value)
+			const newShortBreak = parseInt(shortBreakRef.current.value)
+			const newLongBreak = parseInt(longBreakRef.current.value)
+
+			setPomodoro(newPomodoro)
+			setShortBreak(newShortBreak)
+			setLongBreak(newLongBreak)
+
+			initialPomodoroRef.current = newPomodoro
+			initialShortBreakRef.current = newShortBreak
+			initialLongBreakRef.current = newLongBreak
+
 			setOpenSetting(false)
 			setSecond(0)
 			setConsumedSecond(0)
 		}
 	}
 
-	/* eslint-enable react-hooks/exhaustive-deps */
 	const switchStage = useCallback(
 		(index) => {
 			const isYes =
@@ -46,7 +58,6 @@ export default function Pomodoro() {
 		},
 		[consumedSecond, stage],
 	)
-	/* eslint-enable react-hooks/exhaustive-deps */
 
 	const getTickingTime = useCallback(() => {
 		const timeStage = {
@@ -67,10 +78,12 @@ export default function Pomodoro() {
 	}, [stage])
 
 	const reset = useCallback(() => {
+		setPomodoro(initialPomodoroRef.current)
+		setShortBreak(initialShortBreakRef.current)
+		setLongBreak(initialLongBreakRef.current)
 		setConsumedSecond(0)
 		setTicking(false)
 		setSecond(0)
-		updateTimeDefaultValue()
 	}, [])
 
 	const timeUp = useCallback(() => {

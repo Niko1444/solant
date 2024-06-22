@@ -15,7 +15,7 @@ function PlantMain({ selectedPlant }) {
 	const originAsset = assetMapping.origins[origin]
 
 	const stats = [
-		{ label: 'You have planted:', value: 4, unit: 'Solantrees' },
+		{ label: 'You have planted:', value: 5, unit: 'Solantrees' },
 		{ label: 'Minted:', value: 3, unit: 'Solantrees' },
 		{ label: 'Time of productivity', value: 180, unit: 'minutes' },
 		{ label: 'Total streak:', value: 5, unit: 'days' },
