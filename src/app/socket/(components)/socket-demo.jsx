@@ -13,10 +13,15 @@ const ChatApp = () => {
 	const [messages, setMessages] = useState([])
 	const [inputValue, setInputValue] = useState('')
 	const [roomValue, setRoomValue] = useState('')
+	const [isInRoom, setIsInRoom] = useState(false) // New state to track if the user is in a room
 	const messagesEndRef = useRef(null)
 
 	const handleSubmit = (event) => {
 		event.preventDefault()
+		if (!isInRoom) {
+			alert('Please join a room first.') // Alert the user to join a room first
+			return // Prevent the message from being sent
+		}
 		if (inputValue.trim()) {
 			socket.emit('message', inputValue)
 			setInputValue('')
@@ -28,6 +33,7 @@ const ChatApp = () => {
 		if (roomValue.trim()) {
 			socket.emit('room', roomValue)
 			setRoomValue('')
+			setIsInRoom(true) // Set isInRoom to true when the user joins a room
 		}
 	}
 

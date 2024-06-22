@@ -18,17 +18,25 @@ app.prepare().then(() => {
 		},
 	})
 
+	const userRooms = new Map()
+
 	io.on('connection', (socket) => {
 		console.log('a user connected')
+
 		socket.on('disconnect', () => {
 			console.log('user disconnected')
+			userRooms.delete(socket.id)
 		})
 
 		socket.on('message', (msg) => {
-			io.emit('message', msg)
+			const room = userRooms.get(socket.id)
+			if (room) {
+				io.to(room).emit('message', msg)
+			}
 		})
 
 		socket.on('room', (room) => {
+			userRooms.set(socket.id, room)
 			socket.join(room)
 			io.to(room).emit('room', { room, message: `You are in room ${room}` })
 		})
