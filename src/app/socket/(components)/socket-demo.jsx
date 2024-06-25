@@ -1,26 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { io } from 'socket.io-client'
 import './style.css'
+import axios from 'axios'
 
-// Log the environment variable to ensure it's set correctly
-console.log('Socket URL:', process.env.NEXT_PUBLIC_SOCKET_URL)
+// Ensure the environment variable is set correctly
 
+// Create the socket connection
 const socket = io(
-	process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3000/',
+	'https://render-socket-ylqm.onrender.com/' || 'http://localhost:3001',
 )
 
 const ChatApp = () => {
 	const [messages, setMessages] = useState([])
 	const [inputValue, setInputValue] = useState('')
 	const [roomValue, setRoomValue] = useState('')
-	const [isInRoom, setIsInRoom] = useState(false) // New state to track if the user is in a room
+	const [isInRoom, setIsInRoom] = useState(false)
 	const messagesEndRef = useRef(null)
 
 	const handleSubmit = (event) => {
 		event.preventDefault()
 		if (!isInRoom) {
-			alert('Please join a room first.') // Alert the user to join a room first
-			return // Prevent the message from being sent
+			alert('Please join a room first.')
+			return
 		}
 		if (inputValue.trim()) {
 			socket.emit('message', inputValue)
@@ -33,7 +34,7 @@ const ChatApp = () => {
 		if (roomValue.trim()) {
 			socket.emit('room', roomValue)
 			setRoomValue('')
-			setIsInRoom(true) // Set isInRoom to true when the user joins a room
+			setIsInRoom(true)
 		}
 	}
 
