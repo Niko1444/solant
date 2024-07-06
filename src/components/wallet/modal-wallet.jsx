@@ -1,10 +1,45 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiX } from 'react-icons/fi'
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
+import { useWallet } from '@solana/wallet-adapter-react'
+import { getTokenAccounts } from '../../nft-build/QueryNFT'
+import { Connection } from '@solana/web3.js'
+import { Metaplex, keypairIdentity } from '@metaplex-foundation/js'
 import CandyMint from '../../components/ui/candyMint'
 
+const rpcEndpoint = 'https://api.devnet.solana.com'
+const solanaConnection = new Connection(rpcEndpoint)
+
 function ModalWallet({ openWallet, setOpenWallet }) {
+	const { publicKey, connect, disconnect } = useWallet()
+	const [walletAddress, setWalletAddress] = useState(null)
+	const [metaplex, setMetaplex] = useState(null)
+
+	useEffect(() => {
+		if (publicKey) {
+			const address = publicKey.toString()
+			setWalletAddress(address)
+
+			// Initialize Metaplex with the wallet's public key
+			const metaplexInstance = Metaplex.make(solanaConnection).use(
+				keypairIdentity(publicKey),
+			)
+			setMetaplex(metaplexInstance)
+
+			console.log('Connected wallet address:', address)
+		} else {
+			setWalletAddress(null)
+			setMetaplex(null)
+		}
+	}, [publicKey])
+
+	useEffect(() => {
+		if (walletAddress && metaplex) {
+			getTokenAccounts(walletAddress, solanaConnection, metaplex)
+		}
+	}, [walletAddress, metaplex])
+
 	return (
 		<AnimatePresence>
 			{openWallet && (

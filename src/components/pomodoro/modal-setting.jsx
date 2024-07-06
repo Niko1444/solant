@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FiX } from 'react-icons/fi'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useMediaQuery } from 'react-responsive'
@@ -20,6 +20,7 @@ function ModalSetting({
 	setCurrentRoom,
 }) {
 	const [roomID, setRoomID] = useState('')
+	const [inHuddle, setInHuddle] = useState(false)
 
 	const inputs = [
 		{
@@ -41,14 +42,34 @@ function ModalSetting({
 
 	const isMobile = useMediaQuery({ maxWidth: 767 })
 
+	// Retrieve huddle state from local storage on mount
+	useEffect(() => {
+		const savedRoomID = localStorage.getItem('roomID')
+		const savedInHuddle = localStorage.getItem('inHuddle') === 'true'
+
+		if (savedRoomID) {
+			setRoomID(savedRoomID)
+			setCurrentRoom(savedRoomID)
+		}
+
+		if (savedInHuddle) {
+			setInHuddle(savedInHuddle)
+		}
+	}, [setCurrentRoom])
+
+	// Store huddle state in local storage when it changes
+	useEffect(() => {
+		localStorage.setItem('roomID', roomID)
+		localStorage.setItem('inHuddle', inHuddle)
+	}, [roomID, inHuddle])
+
 	const handleJoinRoom = () => {
 		if (roomID.trim()) {
 			console.log(`Joining room: ${roomID}`)
 			socket.emit('room', roomID)
-			setRoomID('')
 			setCurrentRoom(roomID)
+			setInHuddle(true)
 			alert('Joined room successfully!')
-			setOpenSetting(false)
 		} else {
 			alert('Please enter a room ID.')
 		}
@@ -59,7 +80,7 @@ function ModalSetting({
 			{openSetting && (
 				<>
 					<motion.div
-						className={`absolute flex flex-col rounded-[2rem] bg-green-darkest p-5 opacity-[0.98] ${
+						className={`absolute z-10 flex flex-col rounded-[2rem] bg-green-darkest p-5 opacity-[0.98] ${
 							isMobile ? 'h-[30rem] w-[20rem]' : 'h-[40rem] w-[34rem]'
 						}`}
 						initial={{ scale: 0.8 }}
@@ -106,37 +127,67 @@ function ModalSetting({
 							</div>
 							<div className="mb-5 mt-2 h-1 w-full bg-green-lightest"></div>
 							<div className="flex flex-col gap-4">
-								<input
-									type="text"
-									className="flex-grow rounded bg-green-lightest bg-opacity-30 py-2 text-center text-xl text-white placeholder-opacity-30 outline-none"
-									placeholder="#HuddleID"
-									value={roomID}
-									onChange={(e) => setRoomID(e.target.value)}
-								/>
-								<div className="flex gap-2">
-									<button
-										className="w-1/2 rounded bg-green-lightest py-2 text-sm text-black transition ease-in-out hover:bg-green-dark hover:text-white"
-										onClick={handleJoinRoom}
-									>
-										Join Huddle
-									</button>
-									<button className="w-1/2 rounded bg-green-lightest py-2 text-sm text-black transition ease-in-out hover:bg-green-dark hover:text-white">
-										Create Huddle
-									</button>
-								</div>
+								{!inHuddle && (
+									<>
+										<input
+											type="text"
+											className="flex-grow rounded bg-green-lightest bg-opacity-30 py-2 text-center text-xl text-white placeholder-opacity-30 outline-none"
+											placeholder="#HuddleID"
+											value={roomID}
+											onChange={(e) => setRoomID(e.target.value)}
+										/>
+										<div className="flex gap-2">
+											<button
+												className="w-full rounded bg-green-lightest py-2 text-sm text-black transition ease-in-out hover:bg-green-dark hover:text-white"
+												onClick={handleJoinRoom}
+											>
+												Join Huddle
+											</button>
+										</div>
+									</>
+								)}
+								{inHuddle && (
+									<>
+										<div className="flex items-center justify-between gap-2">
+											<h1 className="flex-grow rounded-lg bg-green p-2 text-center text-white">
+												Huddle ID: {roomID}
+											</h1>
+											<button
+												className="rounded-lg bg-[#E37F79] p-2 text-black"
+												onClick={() => {
+													setInHuddle(false)
+													setCurrentRoom('')
+													setRoomID('')
+												}}
+											>
+												Leave Huddle
+											</button>
+										</div>
+									</>
+								)}
 							</div>
 						</div>
 						{/* An svg and encourage text */}
 						<div className="flex-grow">
-							{/* Placeholder for the svg */}
-							<div className="flex justify-center pt-4 align-middle">
-								<img src="/assets/svgs/placeholder.svg" alt="placeholder" />
-							</div>
+							{!inHuddle && (
+								<>
+									<div className="flex justify-center pt-4 align-middle">
+										<img src="/assets/svgs/placeholder.svg" alt="placeholder" />
+									</div>
 
-							{/* Encourage text */}
-							<p className="mt-5 text-center text-[#A3ABA2]">
-								Huddle up with friends for fun, focus, and exclusive solantrees!
-							</p>
+									<p className="mt-5 text-center text-[#A3ABA2]">
+										Huddle up with friends for fun, focus, and exclusive
+										solantrees!
+									</p>
+								</>
+							)}
+							{inHuddle && (
+								<>
+									<div className="flex justify-center pb-4 pt-8 align-middle">
+										<img src="/assets/svgs/huddle.svg" alt="huddle" />
+									</div>
+								</>
+							)}
 						</div>
 						{/* Save button */}
 						<div>

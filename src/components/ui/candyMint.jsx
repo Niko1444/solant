@@ -21,10 +21,10 @@ import { clusterApiUrl } from '@solana/web3.js'
 import * as bs58 from 'bs58'
 
 const quicknodeEndpoint =
-	'https://solana-devnet.g.alchemy.com/v2/Yw6g1yw54yXlyLYD5kXbxH4-8tAxvVGY ' ||
+	'https://solana-devnet.g.alchemy.com/v2/Yw6g1yw54yXlyLYD5kXbxH4-8tAxvVGY' ||
 	clusterApiUrl('devnet')
 const candyMachineAddress = publicKey(
-	'3USi3CnQyMHHEYjmvAqdbX9NZsEwJzfE39RQHPZjxtNK',
+	'Funbs6hHa6mHjSVh5foUNeEbfdJEaUjJiktoL78A8mcm',
 )
 const treasury = publicKey('H6oEWNDbXCCXXwjZG4XViVTdctoXubnGa1LDQ76vWNk5')
 
