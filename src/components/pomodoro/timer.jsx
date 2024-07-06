@@ -22,6 +22,7 @@ export default function Timer({
 	longBreakRef,
 	updateTimeDefaultValue,
 	completedPomodoros,
+	setCurrentRoom,
 }) {
 	const playerContainerRef = useRef(null)
 	const hiddenPlayerContainerRef = useRef(null)
@@ -234,6 +235,7 @@ export default function Timer({
 						shortBreakRef={shortBreakRef}
 						longBreakRef={longBreakRef}
 						updateTimeDefaultValue={updateTimeDefaultValue}
+						setCurrentRoom={setCurrentRoom}
 					/>
 				)}
 			</AnimatePresence>

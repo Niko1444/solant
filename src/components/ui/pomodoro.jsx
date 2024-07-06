@@ -2,6 +2,8 @@
 
 import React, { useEffect, useRef, useState, useCallback } from 'react'
 import Timer from '../pomodoro/timer'
+import ChatApp from './chat'
+import Image from 'next/image'
 
 export default function Pomodoro() {
 	const [pomodoro, setPomodoro] = useState(25)
@@ -14,6 +16,8 @@ export default function Pomodoro() {
 	const [isTimeUp, setIsTimeUp] = useState(false)
 	const [completedPomodoros, setCompletedPomodoros] = useState(0)
 	const [openSetting, setOpenSetting] = useState(false)
+	const [openChat, setOpenChat] = useState(false)
+	const [currentRoom, setCurrentRoom] = useState('')
 
 	const initialPomodoroRef = useRef(25)
 	const initialShortBreakRef = useRef(5)
@@ -22,6 +26,10 @@ export default function Pomodoro() {
 	const pomodoroRef = useRef()
 	const shortBreakRef = useRef()
 	const longBreakRef = useRef()
+
+	const toggleChat = () => {
+		setOpenChat((openChat) => !openChat)
+	}
 
 	const updateTimeDefaultValue = () => {
 		if (pomodoroRef.current && shortBreakRef.current && longBreakRef.current) {
@@ -157,7 +165,23 @@ export default function Pomodoro() {
 					longBreakRef={longBreakRef}
 					updateTimeDefaultValue={updateTimeDefaultValue}
 					completedPomodoros={completedPomodoros}
+					setCurrentRoom={setCurrentRoom}
 				/>
+			</div>
+			{/* Button to Open Chat */}
+			<div className="fixed left-[-1.5rem] top-1/2 flex -translate-y-1/2 transform items-center justify-center">
+				<div
+					className="relative h-[150px] w-[150px] cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110"
+					onClick={toggleChat}
+				>
+					<Image
+						src="/assets/svgs/chat-button.svg"
+						alt="A button has a chat bubble image inside"
+						layout="fill"
+						objectFit="contain"
+					/>
+				</div>
+				{openChat && <ChatApp currentRoom={currentRoom} />}
 			</div>
 		</div>
 	)
