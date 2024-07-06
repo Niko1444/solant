@@ -44,10 +44,11 @@ function ModalWallet({ openWallet, setOpenWallet }) {
 		<AnimatePresence>
 			{openWallet && (
 				<motion.div
-					className="absolute left-[-17rem] top-[-14rem] flex h-[20rem] w-[16rem] flex-col rounded-[2rem] bg-green-darkest p-5 opacity-[0.98]"
+					className="absolute left-[-17rem] top-[-18rem] flex h-[20rem] w-[16rem] flex-col rounded-[2rem] bg-green-darkest p-5 opacity-[0.98] md:left-[-17rem] md:top-[-14rem]"
 					initial={{ scale: 0.8 }}
 					animate={{ scale: 1 }}
 					exit={{ scale: 0.8 }}
+					transition={{ duration: 0.2 }}
 				>
 					<div>
 						<div className="flex items-center justify-between font-primary text-green-lightest">

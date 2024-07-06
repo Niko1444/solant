@@ -3,7 +3,10 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react'
 import Timer from '../pomodoro/timer'
 import ChatApp from './chat'
+import Event from './event'
 import Image from 'next/image'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useMediaQuery } from 'react-responsive'
 
 export default function Pomodoro() {
 	const [pomodoro, setPomodoro] = useState(25)
@@ -17,7 +20,12 @@ export default function Pomodoro() {
 	const [completedPomodoros, setCompletedPomodoros] = useState(0)
 	const [openSetting, setOpenSetting] = useState(false)
 	const [openChat, setOpenChat] = useState(false)
+	const [openEvent, setOpenEvent] = useState(false)
 	const [currentRoom, setCurrentRoom] = useState('')
+
+	const isDesktopOrLaptop = useMediaQuery({
+		query: '(min-width: 1224px)',
+	})
 
 	const initialPomodoroRef = useRef(25)
 	const initialShortBreakRef = useRef(5)
@@ -29,6 +37,10 @@ export default function Pomodoro() {
 
 	const toggleChat = () => {
 		setOpenChat((openChat) => !openChat)
+	}
+
+	const toggleEvent = () => {
+		setOpenEvent((openEvent) => !openEvent)
 	}
 
 	const updateTimeDefaultValue = () => {
@@ -146,43 +158,87 @@ export default function Pomodoro() {
 	}, [isTimeUp])
 
 	return (
-		<div className="font-primary">
-			<div className="mx-auto flex max-w-2xl flex-col">
-				{/* Timer */}
-				<Timer
-					stage={stage}
-					switchStage={switchStage}
-					getTickingTime={getTickingTime}
-					seconds={seconds}
-					ticking={ticking}
-					startTimer={startTimer}
-					isTimeUp={isTimeUp}
-					reset={reset}
-					setOpenSetting={setOpenSetting}
-					openSetting={openSetting}
-					pomodoroRef={pomodoroRef}
-					shortBreakRef={shortBreakRef}
-					longBreakRef={longBreakRef}
-					updateTimeDefaultValue={updateTimeDefaultValue}
-					completedPomodoros={completedPomodoros}
-					setCurrentRoom={setCurrentRoom}
-				/>
-			</div>
-			{/* Button to Open Chat */}
-			<div className="fixed left-[-1.5rem] top-[45%] flex -translate-y-1/2 transform items-center justify-center">
-				<div
-					className="relative h-[150px] w-[150px] cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110"
-					onClick={toggleChat}
-				>
-					<Image
-						src="/assets/svgs/chat-button.svg"
-						alt="A button has a chat bubble image inside"
-						layout="fill"
-						objectFit="contain"
+		<>
+			<div className="font-primary">
+				<div className="mx-auto flex max-w-2xl flex-col">
+					{/* Timer */}
+					<Timer
+						stage={stage}
+						switchStage={switchStage}
+						getTickingTime={getTickingTime}
+						seconds={seconds}
+						ticking={ticking}
+						startTimer={startTimer}
+						isTimeUp={isTimeUp}
+						reset={reset}
+						setOpenSetting={setOpenSetting}
+						openSetting={openSetting}
+						pomodoroRef={pomodoroRef}
+						shortBreakRef={shortBreakRef}
+						longBreakRef={longBreakRef}
+						updateTimeDefaultValue={updateTimeDefaultValue}
+						completedPomodoros={completedPomodoros}
+						setCurrentRoom={setCurrentRoom}
 					/>
 				</div>
-				{openChat && <ChatApp currentRoom={currentRoom} />}
+				{/* Button to Open Chat in the left */}
+				{isDesktopOrLaptop && (
+					<div className="fixed left-[-1.5rem] top-[45%] z-30 flex -translate-y-1/2 transform items-center justify-center">
+						<div
+							className="relative h-[150px] w-[150px] cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110"
+							onClick={toggleChat}
+						>
+							<Image
+								src="/assets/svgs/chat-button.svg"
+								alt="A button has a chat bubble image inside"
+								layout="fill"
+								objectFit="contain"
+							/>
+						</div>
+						<AnimatePresence>
+							{openChat && (
+								<motion.div
+									initial={{ opacity: 0, scale: 0.8 }}
+									animate={{ opacity: 1, scale: 1 }}
+									exit={{ opacity: 0, scale: 0.8 }}
+									transition={{ duration: 0.2 }}
+								>
+									<ChatApp currentRoom={currentRoom} />
+								</motion.div>
+							)}
+						</AnimatePresence>
+					</div>
+				)}
 			</div>
-		</div>
+			{/* Button to Open Event in the right */}
+			{isDesktopOrLaptop && (
+				<div className="fixed right-[-1.5rem] top-[45%] z-30 flex -translate-y-1/2 transform items-center justify-center">
+					<div
+						className="relative h-[150px] w-[150px] cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110"
+						onClick={toggleEvent}
+					>
+						<Image
+							src="/assets/svgs/event-button.svg"
+							alt="A button has a trophy image inside"
+							layout="fill"
+							objectFit="contain"
+						/>
+					</div>
+				</div>
+			)}
+			<AnimatePresence>
+				{openEvent && (
+					<motion.div
+						className="absolute inset-0 m-28"
+						initial={{ opacity: 0, scale: 0.8 }}
+						animate={{ opacity: 1, scale: 1 }}
+						exit={{ opacity: 0, scale: 0.8 }}
+						transition={{ duration: 0.2 }}
+					>
+						<Event />
+					</motion.div>
+				)}
+			</AnimatePresence>
+		</>
 	)
 }

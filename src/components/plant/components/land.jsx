@@ -63,7 +63,7 @@ const Land = ({ selectedPlant }) => {
 						key={index}
 						src={selectedPlant.image}
 						alt={selectedPlant.name}
-						className="absolute md:w-20"
+						className="absolute w-20"
 						style={{ top: cell.top, left: cell.left, zIndex: cell.zIndex }}
 					/>
 				))}

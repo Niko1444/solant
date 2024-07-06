@@ -1,0 +1,38 @@
+{
+	"focusedTime": [
+		{ "rank": 1, "name": "ingrata8", "focused": 480 },
+		{ "rank": 2, "name": "happy_cj1192", "focused": 423 },
+		{ "rank": 3, "name": "your_father_jaja", "focused": 414 },
+		{ "rank": 4, "name": "happy_eznwyr", "focused": 401 },
+		{ "rank": 5, "name": "xxdark246xx", "focused": 380 },
+		{ "rank": 6, "name": "stealth_sniper_", "focused": 379 },
+		{ "rank": 7, "name": "gamer_pro", "focused": 370 },
+		{ "rank": 8, "name": "game_master", "focused": 360 },
+		{ "rank": 9, "name": "high_scorer", "focused": 350 },
+		{ "rank": 10, "name": "victory_king", "focused": 340 }
+	],
+	"looksRated": [
+		{ "rank": 1, "name": "fashionista99", "heart": 1404 },
+		{ "rank": 2, "name": "style_guru", "heart": 1213 },
+		{ "rank": 3, "name": "trendsetter", "heart": 948 },
+		{ "rank": 4, "name": "vogue_victor", "heart": 943 },
+		{ "rank": 5, "name": "glam_queen", "heart": 872 },
+		{ "rank": 6, "name": "chic_champion", "heart": 814 },
+		{ "rank": 7, "name": "fashionista8", "heart": 800 },
+		{ "rank": 8, "name": "style_guru2", "heart": 780 },
+		{ "rank": 9, "name": "trendsetter3", "heart": 750 },
+		{ "rank": 10, "name": "vogue_victor4", "heart": 740 }
+	],
+	"collectivePoints": [
+		{ "rank": 1, "name": "gamer_pro", "CP": 1200 },
+		{ "rank": 2, "name": "game_master", "CP": 1150 },
+		{ "rank": 3, "name": "high_scorer", "CP": 1100 },
+		{ "rank": 4, "name": "victory_king", "CP": 1050 },
+		{ "rank": 5, "name": "score_champ", "CP": 1000 },
+		{ "rank": 6, "name": "point_hero", "CP": 950 },
+		{ "rank": 7, "name": "score_keeper", "CP": 900 },
+		{ "rank": 8, "name": "point_master", "CP": 850 },
+		{ "rank": 9, "name": "score_scorer", "CP": 800 },
+		{ "rank": 10, "name": "point_champion", "CP": 750 }
+	]
+}
