@@ -13,7 +13,7 @@ export default function Header() {
 			/>
 
 			{/* A welcome text */}
-			<h1 className="text-right font-primary text-[1rem] sm:text-[1.25rem]">
+			<h1 className="text-center font-primary text-[1rem] sm:text-right sm:text-[1.25rem]">
 				Greetings,
 				<br />
 				Have a productive day!

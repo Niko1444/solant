@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import ModalWallet from '../wallet/modal-wallet'
 import ModalPlant from '../plant/modal-plant'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Footer() {
 	const [showWalletModal, setShowWalletModal] = useState(false)
@@ -20,14 +21,22 @@ export default function Footer() {
 	return (
 		<>
 			{/* Modal Plant */}
-			{showPlantModal && (
-				<div className="absolute z-[0] flex h-full w-full items-center justify-center align-middle font-primary">
-					<ModalPlant
-						openPlant={showPlantModal}
-						setOpenPlant={setShowPlantModal}
-					/>
-				</div>
-			)}
+			<AnimatePresence>
+				{showPlantModal && (
+					<motion.div
+						initial={{ scale: 0.8 }}
+						animate={{ scale: 1 }}
+						exit={{ scale: 0.8 }}
+						className="absolute z-[0] flex h-full w-full items-center justify-center align-middle font-primary"
+					>
+						<ModalPlant
+							openPlant={showPlantModal}
+							setOpenPlant={setShowPlantModal}
+						/>
+					</motion.div>
+				)}
+			</AnimatePresence>
+
 			{/* The footer will have 2 buttons (left & right), one for open the garden overlay, one for the wallet connecting */}
 			<footer className="flex items-center justify-between text-white">
 				{/* The left button */}

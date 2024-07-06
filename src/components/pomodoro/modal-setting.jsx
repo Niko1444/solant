@@ -22,6 +22,10 @@ function ModalSetting({
 	const [roomID, setRoomID] = useState('')
 	const [inHuddle, setInHuddle] = useState(false)
 
+	const isDesktopOrLaptop = useMediaQuery({
+		query: '(min-width: 1224px)',
+	})
+
 	const inputs = [
 		{
 			value: 'Pomodoro',
@@ -86,6 +90,7 @@ function ModalSetting({
 						initial={{ scale: 0.8 }}
 						animate={{ scale: 1 }}
 						exit={{ scale: 0.8 }}
+						transition={{ duration: 0.2 }}
 						style={{
 							transform: 'translate(-50%,-50%)',
 						}}
@@ -168,27 +173,33 @@ function ModalSetting({
 							</div>
 						</div>
 						{/* An svg and encourage text */}
-						<div className="flex-grow">
-							{!inHuddle && (
-								<>
-									<div className="flex justify-center pt-4 align-middle">
-										<img src="/assets/svgs/placeholder.svg" alt="placeholder" />
-									</div>
+						{isDesktopOrLaptop && (
+							<div className="flex-grow">
+								{!inHuddle && (
+									<>
+										<div className="flex justify-center pt-4 align-middle">
+											<img
+												src="/assets/svgs/placeholder.svg"
+												alt="placeholder"
+											/>
+										</div>
 
-									<p className="mt-5 text-center text-[#A3ABA2]">
-										Huddle up with friends for fun, focus, and exclusive
-										solantrees!
-									</p>
-								</>
-							)}
-							{inHuddle && (
-								<>
-									<div className="flex justify-center pb-4 pt-8 align-middle">
-										<img src="/assets/svgs/huddle.svg" alt="huddle" />
-									</div>
-								</>
-							)}
-						</div>
+										<p className="mt-5 text-center text-[#A3ABA2]">
+											Huddle up with friends for fun, focus, and exclusive
+											solantrees!
+										</p>
+									</>
+								)}
+								{inHuddle && (
+									<>
+										<div className="flex justify-center pb-4 pt-8 align-middle">
+											<img src="/assets/svgs/huddle.svg" alt="huddle" />
+										</div>
+									</>
+								)}
+							</div>
+						)}
+
 						{/* Save button */}
 						<div>
 							<button
