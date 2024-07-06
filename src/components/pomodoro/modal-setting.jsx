@@ -1,7 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FiX } from 'react-icons/fi'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useMediaQuery } from 'react-responsive'
+import { io } from 'socket.io-client'
+
+// Ensure the environment variable is set correctly
+// Create the socket connection
+const socket = io(
+	'https://render-socket-ylqm.onrender.com/' || 'http://localhost:3001',
+)
 
 function ModalSetting({
 	pomodoroRef,
@@ -10,7 +17,10 @@ function ModalSetting({
 	openSetting,
 	setOpenSetting,
 	updateTimeDefaultValue,
+	setCurrentRoom,
 }) {
+	const [roomID, setRoomID] = useState('')
+
 	const inputs = [
 		{
 			value: 'Pomodoro',
@@ -30,6 +40,19 @@ function ModalSetting({
 	]
 
 	const isMobile = useMediaQuery({ maxWidth: 767 })
+
+	const handleJoinRoom = () => {
+		if (roomID.trim()) {
+			console.log(`Joining room: ${roomID}`)
+			socket.emit('room', roomID)
+			setRoomID('')
+			setCurrentRoom(roomID)
+			alert('Joined room successfully!')
+			setOpenSetting(false)
+		} else {
+			alert('Please enter a room ID.')
+		}
+	}
 
 	return (
 		<AnimatePresence>
@@ -85,11 +108,16 @@ function ModalSetting({
 							<div className="flex flex-col gap-4">
 								<input
 									type="text"
-									className="flex-grow rounded bg-green-lightest bg-opacity-30 py-2 text-center text-xl text-white outline-none placeholder:opacity-30"
+									className="flex-grow rounded bg-green-lightest bg-opacity-30 py-2 text-center text-xl text-white placeholder-opacity-30 outline-none"
 									placeholder="#HuddleID"
+									value={roomID}
+									onChange={(e) => setRoomID(e.target.value)}
 								/>
 								<div className="flex gap-2">
-									<button className="w-1/2 rounded bg-green-lightest py-2 text-sm text-black transition ease-in-out hover:bg-green-dark hover:text-white">
+									<button
+										className="w-1/2 rounded bg-green-lightest py-2 text-sm text-black transition ease-in-out hover:bg-green-dark hover:text-white"
+										onClick={handleJoinRoom}
+									>
 										Join Huddle
 									</button>
 									<button className="w-1/2 rounded bg-green-lightest py-2 text-sm text-black transition ease-in-out hover:bg-green-dark hover:text-white">
@@ -101,28 +129,12 @@ function ModalSetting({
 						{/* An svg and encourage text */}
 						<div className="flex-grow">
 							{/* Placeholder for the svg */}
+							<div className="flex justify-center pt-4 align-middle">
+								<img src="/assets/svgs/placeholder.svg" alt="placeholder" />
+							</div>
+
 							{/* Encourage text */}
-							{!isMobile && (
-								<div className="flex h-24 w-full items-center justify-center rounded bg-green-lightest bg-opacity-30">
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="48"
-										height="48"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										strokeWidth="2"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										className="text-green-lightest"
-									>
-										<circle cx="12" cy="12" r="10"></circle>
-										<line x1="12" y1="16" x2="12" y2="12"></line>
-										<line x1="12" y1="8" x2="12" y2="8"></line>
-									</svg>
-								</div>
-							)}
-							<p className="mt-5 text-center text-green-lightest">
+							<p className="mt-5 text-center text-[#A3ABA2]">
 								Huddle up with friends for fun, focus, and exclusive solantrees!
 							</p>
 						</div>
