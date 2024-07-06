@@ -74,7 +74,7 @@ const ChatApp = ({ currentRoom }) => {
 	}, [])
 
 	return (
-		<div className="m-4 flex h-[36rem] w-[28rem] flex-col overflow-hidden rounded-lg bg-green-lightest opacity-90 shadow-lg">
+		<div className="m-4 flex h-[36rem] w-[26rem] flex-col overflow-hidden rounded-lg bg-green-lightest opacity-90 shadow-lg">
 			<div className="bg-green-dark p-2 text-center text-white">
 				{isInRoom
 					? `Huddle ID: ${roomValue}`
