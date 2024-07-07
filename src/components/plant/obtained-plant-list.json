@@ -3,7 +3,7 @@
 		"name": "Just Tree",
 		"symbol": "Tree",
 		"description": "It is just a tree. Nothing more, nothing less.",
-		"image": "/assets/solantrees/Just_Tree.svg",
+		"image": "/assets/solantrees/just_tree.svg",
 		"attributes": {
 			"origin": "Forest",
 			"type": "Colossal"
@@ -13,7 +13,7 @@
 		"name": "Estrella Tree",
 		"symbol": "Tree",
 		"description": "Born from stardust and ancient cliffside minerals, the Estrella Tree stands as a celestial sentinel. Shimmering leaves capture starlight, pulsating with cosmic energy.",
-		"image": "/assets/solantrees/Estrella_Tree.svg",
+		"image": "/assets/solantrees/estrella_tree.svg",
 		"attributes": {
 			"origin": "Cliff",
 			"type": "Cosmic"
@@ -23,7 +23,7 @@
 		"name": "Lover Tree",
 		"symbol": "Tree",
 		"description": "The Lover Tree's intertwined trunks form a heart, symbolizing eternal love. Glowing blossoms spread warmth, and legend says couples who wish beneath it will have their bond strengthened by its magic.",
-		"image": "/assets/solantrees/Lover_Tree.svg",
+		"image": "/assets/solantrees/lover_tree.svg",
 		"attributes": {
 			"origin": "Forest",
 			"type": "Enchanted"
@@ -33,10 +33,50 @@
 		"name": "Olympus Tree",
 		"symbol": "Tree",
 		"description": "Standing tall on high cliffs, the Olympus Tree exudes an aura of ancient myth. Its majestic form resembles a godly figure holding a golden apple, symbolizing divine wisdom and power.",
-		"image": "/assets/solantrees/Olympus_Tree.svg",
+		"image": "/assets/solantrees/olympus_tree.svg",
 		"attributes": {
 			"origin": "Cliff",
 			"type": "Mithical"
+		}
+	},
+	{
+		"name": "Portal Tree",
+		"symbol": "Tree",
+		"description": "Portal Tree, a luminous anomaly, beckons with otherworldly whispers. Its shimmering bark promises passage – to serene aquatic depths or realms twisted by aberration. Choose wisely, for the gateway awaits.",
+		"image": "/assets/solantrees/portal_tree.svg",
+		"attributes": {
+			"origin": "Water",
+			"type": "Cosmic"
+		}
+	},
+	{
+		"name": "Time Tree",
+		"symbol": "Tree",
+		"description": "The Time Tree is shrouded in an aura of mystery. Its bark seems to ripple and shift, like time itself is bending around it.  Legends say that the Time Tree holds the key to traversing the past and future, but at a terrible cost.",
+		"image": "/assets/solantrees/time_tree.svg",
+		"attributes": {
+			"origin": "Desert",
+			"type": "Ethereal"
+		}
+	},
+	{
+		"name": "Slimey Tree",
+		"symbol": "Tree",
+		"description": "The Slimey Tree is a grotesque monstrosity. Its bulbous form is covered in pulsating, luminescent slime that drips onto the ground below. The air around the Slimey Tree is thick with a noxious odor, and unsettling gurgling sounds emanate from within its depths.",
+		"image": "/assets/solantrees/slimey_tree.svg",
+		"attributes": {
+			"origin": "Forest",
+			"type": "Aberrant"
+		}
+	},
+	{
+		"name": "Newcomer Tree",
+		"symbol": "Tree",
+		"description": "The Newcomer Tree, a verdant sapling, welcomes all with open arms. Its vibrant leaves whisper promises of growth and a place to belong.",
+		"image": "/assets/solantrees/newcomer_tree.svg",
+		"attributes": {
+			"origin": "Forest",
+			"type": "Colossal"
 		}
 	}
 ]
