@@ -3,7 +3,6 @@ import React from 'react'
 
 const PlantDescription = ({
 	name,
-	symbol,
 	typeAsset,
 	originAsset,
 	description,
@@ -12,9 +11,7 @@ const PlantDescription = ({
 }) => (
 	<div className="flex flex-[40%] flex-col">
 		<div className="flex-[50%]">
-			<h2 className="text-[2.5rem] text-white">
-				{name} {symbol}
-			</h2>
+			<h2 className="text-[2.5rem] text-white">{name}</h2>
 			<div className="flex items-center gap-2">
 				{/* Render type SVG */}
 				{typeAsset && (
