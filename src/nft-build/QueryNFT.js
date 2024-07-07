@@ -22,31 +22,32 @@ export async function getTokenAccounts(wallet, solanaConnection, metaplex) {
 			},
 		)
 
-		console.log(
-			`Found ${accounts.length} token account(s) for wallet ${wallet}.`,
+		const nftData = await Promise.all(
+			accounts.map(async (account) => {
+				const parsedAccountInfo = account.account.data
+				const mintAddress = new PublicKey(
+					parsedAccountInfo['parsed']['info']['mint'],
+				)
+				const tokenBalance =
+					parsedAccountInfo['parsed']['info']['tokenAmount']['uiAmount']
+
+				const nft = await metaplex.nfts().findByMint({ mintAddress })
+				return {
+					tokenAccount: account.pubkey.toString(),
+					tokenMint: mintAddress.toString(),
+					tokenBalance,
+					name: nft.json.name,
+					symbol: nft.json.symbol,
+					description: nft.json.description,
+					image: nft.json.image,
+					attributes: nft.json.attributes,
+				}
+			}),
 		)
-		for (const account of accounts) {
-			// Parse the account data
-			const parsedAccountInfo = account.account.data
-			const mintAddress = new PublicKey(
-				parsedAccountInfo['parsed']['info']['mint'],
-			)
-			const tokenBalance =
-				parsedAccountInfo['parsed']['info']['tokenAmount']['uiAmount']
 
-			// Log results
-			console.log(`Token Account: ${account.pubkey.toString()}`)
-			console.log(`--Token Mint: ${mintAddress}`)
-			console.log(`--Token Balance: ${tokenBalance}`)
-
-			const nft = await metaplex.nfts().findByMint({ mintAddress })
-			console.log(nft.json.name)
-			console.log(nft.json.symbol)
-			console.log(nft.json.description)
-			console.log(nft.json.image)
-			console.log(nft.json.attributes)
-		}
+		return nftData
 	} catch (error) {
-		console.error(error)
+		console.error('Error fetching token accounts:', error)
+		return []
 	}
 }

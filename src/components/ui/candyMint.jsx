@@ -24,7 +24,7 @@ const quicknodeEndpoint =
 	'https://solana-devnet.g.alchemy.com/v2/Yw6g1yw54yXlyLYD5kXbxH4-8tAxvVGY' ||
 	clusterApiUrl('devnet')
 const candyMachineAddress = publicKey(
-	'Funbs6hHa6mHjSVh5foUNeEbfdJEaUjJiktoL78A8mcm',
+	'9a5tXP7wZuja2iCkGuNTVhQkzD9WZxSRYRWCtfDXksdD',
 )
 const treasury = publicKey('H6oEWNDbXCCXXwjZG4XViVTdctoXubnGa1LDQ76vWNk5')
 

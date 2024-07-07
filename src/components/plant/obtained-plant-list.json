@@ -1,39 +1,39 @@
 [
 	{
-		"name": "Just",
+		"name": "Just Tree",
 		"symbol": "Tree",
 		"description": "It is just a tree. Nothing more, nothing less.",
-		"image": "/assets/solantrees/default.svg",
+		"image": "/assets/solantrees/Just_Tree.svg",
 		"attributes": {
 			"origin": "Forest",
 			"type": "Colossal"
 		}
 	},
 	{
-		"name": "Estrella",
+		"name": "Estrella Tree",
 		"symbol": "Tree",
 		"description": "Born from stardust and ancient cliffside minerals, the Estrella Tree stands as a celestial sentinel. Shimmering leaves capture starlight, pulsating with cosmic energy.",
-		"image": "/assets/solantrees/estrella.svg",
+		"image": "/assets/solantrees/Estrella_Tree.svg",
 		"attributes": {
 			"origin": "Cliff",
 			"type": "Cosmic"
 		}
 	},
 	{
-		"name": "Lover",
+		"name": "Lover Tree",
 		"symbol": "Tree",
 		"description": "The Lover Tree's intertwined trunks form a heart, symbolizing eternal love. Glowing blossoms spread warmth, and legend says couples who wish beneath it will have their bond strengthened by its magic.",
-		"image": "/assets/solantrees/lover.svg",
+		"image": "/assets/solantrees/Lover_Tree.svg",
 		"attributes": {
 			"origin": "Forest",
 			"type": "Enchanted"
 		}
 	},
 	{
-		"name": "Olympus",
+		"name": "Olympus Tree",
 		"symbol": "Tree",
 		"description": "Standing tall on high cliffs, the Olympus Tree exudes an aura of ancient myth. Its majestic form resembles a godly figure holding a golden apple, symbolizing divine wisdom and power.",
-		"image": "/assets/solantrees/olympus.svg",
+		"image": "/assets/solantrees/Olympus_Tree.svg",
 		"attributes": {
 			"origin": "Cliff",
 			"type": "Mithical"
