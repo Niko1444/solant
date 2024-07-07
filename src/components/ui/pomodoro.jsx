@@ -169,7 +169,7 @@ export default function Pomodoro() {
 				/>
 			</div>
 			{/* Button to Open Chat */}
-			<div className="fixed left-[-1.5rem] top-[45%] flex -translate-y-1/2 transform items-center justify-center">
+			<div className="fixed left-[-1.5rem] top-[45%] z-30 flex -translate-y-1/2 transform items-center justify-center">
 				<div
 					className="relative h-[150px] w-[150px] cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110"
 					onClick={toggleChat}

@@ -86,7 +86,7 @@ const ChatApp = ({ currentRoom }) => {
 						key={index}
 						className={
 							message.type === 'system'
-								? 'text-center text-green-lightest'
+								? 'text-center text-black'
 								: index % 2 === 0
 									? 'rounded bg-gray-200 p-2'
 									: 'rounded bg-gray-100 p-2'
